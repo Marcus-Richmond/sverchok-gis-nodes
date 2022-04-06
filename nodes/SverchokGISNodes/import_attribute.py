@@ -18,15 +18,13 @@ from shapely.geometry import shape
 import numpy as np
 
 
-class SvScaleVectorNode(SverchCustomTreeNode, bpy.types.Node):
+class SvSGNImportAttribute(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: GIS import
-    Tooltip: Import GPKG layer
-
-    Merely for illustration of node creation workflow
+    Tooltip: Import GPKG layer attribute
     """
-    bl_idname = 'SvScaleVectorNode'  # should be add to `sverchok/index.md` file
-    bl_label = 'Custom Node'
+    bl_idname = 'SvSGNImportAttribute'  # should be add to `sverchok/index.md` file
+    bl_label = 'Import Attribute Node'
     bl_icon = 'RNA'
 
     def sv_init(self, context):  # All socket types are in `sverchok/core/sockets.py` file
@@ -64,7 +62,9 @@ class SvScaleVectorNode(SverchCustomTreeNode, bpy.types.Node):
             self.outputs["Attribute"].sv_set(listAttribute)
         
         
-        
 
 def register():
-    bpy.utils.register_class(SvScaleVectorNode)
+        bpy.utils.register_class(SvSGNImportAttribute)
+
+def unregister():
+        bpy.utils.unregister_class(SvSGNImportAttribute)
