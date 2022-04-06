@@ -36,13 +36,15 @@ if __name__ != "sv_gis_nodes":
 
 import sv_gis_nodes
 # from sv_gis_nodes import menu
-from sv_gis_nodes.nodes_index import nodes_index
+# from sv_gis_nodes.nodes_index import nodes_index
 # from sverchok_open3d.utils import show_welcome
 
 DOCS_LINK = 'https://github.com/vicdoval/sverchok-gis-nodes/tree/master/utils'
 MODULE_NAME = 'sv_gis_nodes'
 
 def make_node_list():
+    import sv_gis_nodes
+    from sv_gis_nodes.nodes_index import nodes_index
     modules = []
     base_name = "sv_gis_nodes.nodes"
     index = nodes_index()
@@ -55,6 +57,8 @@ def make_node_list():
     return modules
 
 def plain_node_list():
+    import sv_gis_nodes
+    from sv_gis_nodes.nodes_index import nodes_index
     node_cats = {}
     index = nodes_index()
     for category, items in index:
@@ -75,6 +79,7 @@ if "bpy" in locals():
     reload_modules()
 
 import bpy
+from sv_gis_nodes.nodes_index import nodes_index
 
 def register_nodes():
     node_modules = make_node_list()
