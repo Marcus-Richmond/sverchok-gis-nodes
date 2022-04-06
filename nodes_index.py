@@ -2,9 +2,9 @@
 def nodes_index():
     return [("General GIS", [
 
-                ("general.gis_import_attribute", "GIS Attributes"),
-                ("general.node_1", "SvGISSomeNodeOne"),
-                ("general.node_2", "SvGISSomeNodeTWO"),
+                ("general.gis_import_attribute", "SvSGNImportAttribute"),
+                ("general.node_1", "SvGISNode1"),
+                ("general.node_2", "SvGISNode2"),
                 ]),
             # ("Point Cloud", [
             #     ("point_cloud.point_cloud_in", "SvO3PointCloudInNode"),
