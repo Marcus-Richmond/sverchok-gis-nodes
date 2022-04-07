@@ -1,17 +1,7 @@
 import bpy
 from sverchok.ui.nodeview_space_menu import make_extra_category_menus, layout_draw_categories
 from sv_gis_nodes.nodes_index import nodes_index
-# from sv_gis_nodes.dependencies import open3d as o3d
-
-def plain_node_list():
-    node_categories = {}
-    index = nodes_index()
-    for category, items in index:
-        nodes = []
-        for _, node_name in items:
-            nodes.append([node_name])
-        node_categories[category] = nodes
-    return node_categories
+from sv_gis_nodes.bootstrapping import plain_node_list
 
 node_cats = plain_node_list()
 
