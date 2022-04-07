@@ -5,13 +5,13 @@ import sverchok
 from sverchok.menu import SverchNodeItem
 from sverchok.utils.logging import info, debug
 
-import sv_gis_nodes
-from sv_gis_nodes.nodes_index import nodes_index
+import sverchok_gis_nodes
+from sverchok_gis_nodes.nodes_index import nodes_index
 
 
 def make_node_list():
     modules = []
-    base_name = "sv_gis_nodes.nodes"
+    base_name = "sverchok_gis_nodes.nodes"
     index = nodes_index()
     for category, items in index:
         for module_name, node_name in items:
@@ -38,7 +38,7 @@ def register_nodes():
     info("Registered %s nodes", len(node_modules))
 
 def unregister_nodes():
-    from sv_gis_nodes import imported_modules
+    from sverchok_gis_nodes import imported_modules
     for module in reversed(imported_modules):
         module.unregister()
 
@@ -77,7 +77,7 @@ def add_nodes_to_sv():
                 SverchNodeItem.new(nodetype)
 
 def reload_modules():
-    from sv_gis_nodes import imported_modules
+    from sverchok_gis_nodes import imported_modules
     for im in imported_modules:
         debug("Reloading: %s", im)
         importlib.reload(im)

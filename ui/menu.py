@@ -1,7 +1,7 @@
 import bpy
 from sverchok.ui.nodeview_space_menu import make_extra_category_menus, layout_draw_categories
-from sv_gis_nodes.nodes_index import nodes_index
-from sv_gis_nodes.bootstrapping import plain_node_list
+from sverchok_gis_nodes.nodes_index import nodes_index
+from sverchok_gis_nodes.bootstrapping import plain_node_list
 
 node_cats = plain_node_list()
 

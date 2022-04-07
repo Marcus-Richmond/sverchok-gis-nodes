@@ -13,7 +13,7 @@ bl_info = {
 
 
 DOCS_LINK = 'https://github.com/vicdoval/sverchok-gis-nodes/tree/master/utils'
-MODULE_NAME = 'sv_gis_nodes'
+MODULE_NAME = 'sverchok_gis_nodes'
 
 import sys
 import importlib
@@ -31,12 +31,14 @@ from sverchok.node_tree import SverchCustomTreeNode
 from sverchok.utils.logging import info, debug
 
 # make sverchok the root module name, (if sverchok dir not named exactly "sverchok")
-if __name__ != "sv_gis_nodes":
-    sys.modules["sv_gis_nodes"] = sys.modules[__name__]
+if __name__ != "sverchok_gis_nodes":
+    sys.modules["sverchok_gis_nodes"] = sys.modules[__name__]
 
-import sv_gis_nodes
-from sv_gis_nodes.bootstrapping import make_node_list, reload_modules
-from sv_gis_nodes.ui import menu
+import sverchok_gis_nodes
+from sverchok_gis_nodes import bootstrapping
+print(dir(), sverchok_gis_nodes)
+from sverchok_gis_nodes.bootstrapping import make_node_list, reload_modules
+from sverchok_gis_nodes.ui import menu
 
 
 imported_modules = make_node_list()
@@ -44,7 +46,7 @@ imported_modules = make_node_list()
 reload_event = False
 if "bpy" in locals():
     reload_event = True
-    info("Reloading sv_gis_nodes...")
+    info("Reloading sverchok_gis_nodes...")
     reload_modules()
 
 import bpy
@@ -68,15 +70,14 @@ gis_menu_classes = []
 def register():
     global gis_menu_classes
 
-    debug("Registering sv_gis_nodes!")
-
+    debug("Registering sverchok_gis_nodes!")
     register_nodes()
-    extra_nodes = importlib.import_module(".nodes", "sv_gis_nodes")
+    extra_nodes = importlib.import_module(".nodes", "sverchok_gis_nodes")
     auto_gather_node_classes(extra_nodes)
 
     add_nodes_to_sv()
     
-    from sv_gis_nodes import menu
+    from sverchok_gis_nodes import menu
     menu.register()
 
     cats_menu = make_categories()
