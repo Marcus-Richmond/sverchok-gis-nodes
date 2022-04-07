@@ -31,8 +31,8 @@ from sverchok.node_tree import SverchCustomTreeNode
 from sverchok.utils.logging import info, debug
 
 # make sverchok the root module name, (if sverchok dir not named exactly "sverchok")
-if __name__ != "sverchok_gis_nodes":
-    sys.modules["sverchok_gis_nodes"] = sys.modules[__name__]
+if __name__ != MODULE_NAME:
+    sys.modules[MODULE_NAME] = sys.modules[__name__]
 
 import sverchok_gis_nodes
 from sverchok_gis_nodes import bootstrapping
