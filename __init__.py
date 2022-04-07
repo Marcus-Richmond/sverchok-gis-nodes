@@ -1,4 +1,3 @@
-
 bl_info = {
     "name": "Sverchok-GIS-Nodes",
     "author": "Marcus Richmond",
@@ -13,6 +12,8 @@ bl_info = {
 }
 
 
+DOCS_LINK = 'https://github.com/vicdoval/sverchok-gis-nodes/tree/master/utils'
+MODULE_NAME = 'sv_gis_nodes'
 
 import sys
 import importlib
@@ -21,7 +22,7 @@ import nodeitems_utils
 import bl_operators
 
 import sverchok
-from sverchok.core import sv_registration_utils, make_node_list
+from sverchok.core import sv_registration_utils
 from sverchok.utils import auto_gather_node_classes, get_node_class_reference
 from sverchok.menu import SverchNodeItem, node_add_operators, SverchNodeCategory, register_node_panels, unregister_node_panels, unregister_node_add_operators
 from sverchok.utils.extra_categories import register_extra_category_provider, unregister_extra_category_provider
@@ -34,27 +35,19 @@ if __name__ != "sv_gis_nodes":
     sys.modules["sv_gis_nodes"] = sys.modules[__name__]
 
 import sv_gis_nodes
-from sv_gis_nodes.bootstrapping import make_node_list
+from sv_gis_nodes.bootstrapping import make_node_list, reload_modules
 from sv_gis_nodes.ui import menu
-# from sv_gis_nodes import menu
-# from sv_gis_nodes.nodes_index import nodes_index
-# from sverchok_open3d.utils import show_welcome
-
-DOCS_LINK = 'https://github.com/vicdoval/sverchok-gis-nodes/tree/master/utils'
-MODULE_NAME = 'sv_gis_nodes'
 
 
 imported_modules = make_node_list()
 
 reload_event = False
-
 if "bpy" in locals():
     reload_event = True
     info("Reloading sv_gis_nodes...")
     reload_modules()
 
 import bpy
-from sv_gis_nodes.nodes_index import nodes_index
 
 
 class SvGISCategoryProvider(object):
@@ -70,11 +63,6 @@ class SvGISCategoryProvider(object):
 
 gis_menu_classes = []
 
-def reload_modules():
-    global imported_modules
-    for im in imported_modules:
-        debug("Reloading: %s", im)
-        importlib.reload(im)
 
 
 def register():

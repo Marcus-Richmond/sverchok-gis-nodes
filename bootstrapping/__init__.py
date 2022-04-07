@@ -3,9 +3,11 @@ import importlib
 
 import sverchok
 from sverchok.menu import SverchNodeItem
+from sverchok.utils.logging import info, debug
 
 import sv_gis_nodes
 from sv_gis_nodes.nodes_index import nodes_index
+
 
 def make_node_list():
     modules = []
@@ -40,7 +42,6 @@ def unregister_nodes():
     for module in reversed(imported_modules):
         module.unregister()
 
-
 def make_categories():
     menu_cats = []
     index = nodes_index()
@@ -74,3 +75,9 @@ def add_nodes_to_sv():
                 info("Node `%s' is not available (probably due to missing dependencies).", nodetype)
             else:
                 SverchNodeItem.new(nodetype)
+
+def reload_modules():
+    from sv_gis_nodes import imported_modules
+    for im in imported_modules:
+        debug("Reloading: %s", im)
+        importlib.reload(im)
