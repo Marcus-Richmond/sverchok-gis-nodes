@@ -29,6 +29,9 @@ class NODEVIEW_MT_GIS(bpy.types.Menu):
         #     layout.menu("NODEVIEW_MT_Open3DTriangleMeshMenu")
         # layout.menu("NODEVIEW_MT_Open3DPointCloudMenu")
 
+        layout_draw_categories(self.layout, self.bl_label, node_cats['General GIS'])
+        # layout.menu("NODEVIEW_MT_GISImportAttributeMenu")
+
 # does not get registered
 class NodeViewMenuTemplate(bpy.types.Menu):
     bl_label = ""
@@ -41,6 +44,7 @@ def make_class(name, bl_label):
     return clazz
 
 menu_classes = [
+    make_class('ImportAttribute', 'Import Attribute Node')
     # make_class('PointCloud', 'Point Cloud'),
     # make_class('TriangleMesh', 'Triangle Mesh')
     ]
