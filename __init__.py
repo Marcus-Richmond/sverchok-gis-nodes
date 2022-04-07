@@ -169,12 +169,12 @@ def register():
 
     menu_category_provider = SvGISCategoryProvider("SVERCHOK_GIS", cats_menu, DOCS_LINK, use_custom_menu=True, custom_menu='NODEVIEW_MT_GIS')
     register_extra_category_provider(menu_category_provider) #if 'SVERCHOK_OPEN3D' in nodeitems_utils._node_categories:
-    examples.register()
+    # examples.register()
 
     # with make_categories() This would load every sverchok-open3d category straight in the Sv menu
     # our_menu_classes = make_extra_category_menus()
 
-    show_welcome()
+    # show_welcome()
 
 def unregister():
     global gis_menu_classes
