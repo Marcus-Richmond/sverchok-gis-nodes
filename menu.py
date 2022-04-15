@@ -15,7 +15,7 @@ def plain_node_list():
 
 node_cats = plain_node_list()
 
-class NODEVIEW_MT_GISx(bpy.types.Menu):
+class NODEVIEW_MT_GIS(bpy.types.Menu):
     bl_label = "GIS Menu"
 
     def draw(self, context):
@@ -41,21 +41,13 @@ class NodeViewMenuTemplate(bpy.types.Menu):
         layout_draw_categories(self.layout, self.bl_label, node_cats[self.bl_label])
 
 def make_class(name, bl_label):
-    name = 'NODEVIEW_MT_GISx' + name + 'Menu'
-    clazz = type(name, (NodeViewMenuTemplate,), {'bl_label': bl_label})
-    return clazz
+    return type(f'NODEVIEW_MT_GIS{name}Menu', (NodeViewMenuTemplate,), {'bl_label': bl_label})
 
 menu_classes = [
-    make_class('PointCloud', 'Point Cloud'),
-    make_class('TriangleMesh', 'Triangle Mesh')
-    ]
+    make_class('General', 'General'),
+    make_class('Geometry', 'Geometry'),
+    NODEVIEW_MT_GIS
+]
 
-def register():
-    for class_name in menu_classes:
-        bpy.utils.register_class(class_name)
-    bpy.utils.register_class(NODEVIEW_MT_Open3Dx)
+register, unregister = bpy.utils.register_classes_factory(menu_classes)
 
-def unregister():
-    for class_name in menu_classes:
-        bpy.utils.unregister_class(class_name)
-    bpy.utils.unregister_class(NODEVIEW_MT_Open3Dx)

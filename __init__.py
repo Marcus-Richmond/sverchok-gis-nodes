@@ -167,9 +167,9 @@ def register():
     examples.register()
 
     # with make_categories() This would load every sverchok-open3d category straight in the Sv menu
-    # our_menu_classes = make_extra_category_menus()
+    # gis_menu_classes = make_extra_category_menus()
 
-    show_welcome()
+    # show_welcome()
 
 def unregister():
     global gis_menu_classes

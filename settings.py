@@ -8,14 +8,14 @@ from sverchok.dependencies import draw_message
 from sverchok_open3d.dependencies import ex_dependencies, pip, ensurepip
 from sverchok.utils.context_managers import addon_preferences
 
-COMMITS_LINK = 'https://api.github.com/repos/vicdoval/sverchok-open3d/commits'
-ADDON_NAME = sverchok_open3d.__name__
-ADDON_PRETTY_NAME = 'Sverchok Open3d'
-ARCHIVE_LINK = 'https://github.com/vicdoval/sverchok-open3d/archive/'
+COMMITS_LINK = 'https://api.github.com/repos/Marcus-Richmond/sverchok-gis-nodes/commits'
+ADDON_NAME = sverchok_gis.__name__
+ADDON_PRETTY_NAME = 'Sverchok GIS'
+ARCHIVE_LINK = 'https://github.com/Marcus-Richmond/sverchok-gis-nodes/archive/'
 MASTER_BRANCH_NAME = 'master'
 
 def draw_in_sv_prefs(layout):
-    draw_message(layout, "open3d", dependencies=ex_dependencies)
+    draw_message(layout, "geo pandas", dependencies=ex_dependencies)
     
 def update_addon_ui(layout):
     layout.operator('node.sv_show_latest_commits', text='Show Last Commits').commits_link = COMMITS_LINK
@@ -31,13 +31,15 @@ def update_addon_ui(layout):
             update_op.master_branch_name = MASTER_BRANCH_NAME
             update_op.archive_link = ARCHIVE_LINK
 
-def sv_draw_update_menu_in_panel(self, context):
+def sv_draw_gis_update_menu_in_panel(self, context):
     layout = self.layout
     box = layout.box()
     box.label(text=ADDON_PRETTY_NAME)
     update_addon_ui(box)
 
-class SvO3Preferences(AddonPreferences):
+get_icon = lambda package: 'CANCEL' if not package else 'CHECKMARK'
+
+class SvGISPreferences(AddonPreferences):
     bl_idname = __package__
 
     available_new_version: bpy.props.BoolProperty(default=False)
@@ -46,21 +48,15 @@ class SvO3Preferences(AddonPreferences):
 
     def draw(self, context):
         layout = self.layout
-
-        def get_icon(package):
-            # if package is None:
-            #     return 'CANCEL'
-            # else:
-            #     return 'CHECKMARK'
-            return 'CANCEL' if not package else 'CHECKMARK'
-
         box = layout.box()
 
         box.label(text="Dependencies:")
         draw_message(box, "sverchok", dependencies=ex_dependencies)
-        draw_message(box, "open3d", dependencies=ex_dependencies)
+        draw_message(box, "geopandas", dependencies=ex_dependencies)
+
         row = layout.row()
         row.operator('node.sv_show_latest_commits').commits_link = COMMITS_LINK
+
         if not self.available_new_version:
             check = row.operator('node.sverchok_check_for_upgrades_wsha', text='Check for Upgrades')
             check.commits_link = COMMITS_LINK
@@ -72,12 +68,12 @@ class SvO3Preferences(AddonPreferences):
             update_op.archive_link = ARCHIVE_LINK
 
 def register():
-    bpy.utils.register_class(SvO3Preferences)
-    bpy.types.SV_PT_SverchokUtilsPanel.append(sv_draw_update_menu_in_panel)
+    bpy.utils.register_class(SvGISPreferences)
+    bpy.types.SV_PT_SverchokUtilsPanel.append(sv_draw_gis_update_menu_in_panel)
 
 def unregister():
-    bpy.utils.unregister_class(SvO3Preferences)
-    bpy.types.SV_PT_SverchokUtilsPanel.remove(sv_draw_update_menu_in_panel)
+    bpy.utils.unregister_class(SvGISPreferences)
+    bpy.types.SV_PT_SverchokUtilsPanel.remove(sv_draw_gis_update_menu_in_panel)
 
-if __name__ == '__main__':
-    register()
+# if __name__ == '__main__':
+#     register()
