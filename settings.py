@@ -66,7 +66,7 @@ class SvGISPreferences(AddonPreferences):
         draw_message(box, "gdal", dependencies=ex_dependencies)
         draw_message(box, "fiona", dependencies=ex_dependencies)
         draw_message(box, "geopandas", dependencies=ex_dependencies)
-
+        # shapely?
 
         row = layout.row()
         row.operator('node.sv_show_latest_commits').commits_link = COMMITS_LINK
@@ -88,6 +88,3 @@ def register():
 def unregister():
     bpy.utils.unregister_class(SvGISPreferences)
     bpy.types.SV_PT_SverchokUtilsPanel.remove(sv_draw_gis_update_menu_in_panel)
-
-# if __name__ == '__main__':
-#     register()
