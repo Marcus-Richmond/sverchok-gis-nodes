@@ -53,9 +53,9 @@ else:
             listAttribute = []
 
             if path and layername and attribute:
-                layername = str(self.layername[0][0])   # likely not necessary to cast to string.
-                attribute = str(self.attribute[0][0])
-                path = str(self.path[0][0])
+                layername = str(layername[0][0])   # likely not necessary to cast to string.
+                attribute = str(attribute[0][0])
+                path = str(path[0][0])
 
                 # read in gpkg layer as geopandas data frame, and make alias
                 gpd1 = gpd.read_file(path, layer=layername)
