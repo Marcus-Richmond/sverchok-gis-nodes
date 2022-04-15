@@ -1,7 +1,7 @@
 import bpy
 from sverchok.ui.nodeview_space_menu import make_extra_category_menus, layout_draw_categories
-from sverchok_open3d.nodes_index import nodes_index
-from sverchok_open3d.dependencies import open3d as o3d
+from sverchok_gis.nodes_index import nodes_index
+# from sverchok_gis.dependencies import open3d as o3d
 
 def plain_node_list():
     node_categories = {}
@@ -15,11 +15,15 @@ def plain_node_list():
 
 node_cats = plain_node_list()
 
-class NODEVIEW_MT_Open3Dx(bpy.types.Menu):
-    bl_label = "Open3D"
+class NODEVIEW_MT_GISx(bpy.types.Menu):
+    bl_label = "GIS Menu"
 
     def draw(self, context):
         layout = self.layout
+
+        """
+        WE WILL COME BACK TO THIS. WINDOWS USERS.
+
         layout.operator_context = 'INVOKE_REGION_WIN'
         if o3d is None:
 
@@ -28,6 +32,7 @@ class NODEVIEW_MT_Open3Dx(bpy.types.Menu):
             layout_draw_categories(self.layout, self.bl_label, node_cats['Utils'])
             layout.menu("NODEVIEW_MT_Open3DPointCloudMenu")
             layout.menu("NODEVIEW_MT_Open3DTriangleMeshMenu")
+        """
 
 # does not get registered
 class NodeViewMenuTemplate(bpy.types.Menu):
@@ -36,7 +41,7 @@ class NodeViewMenuTemplate(bpy.types.Menu):
         layout_draw_categories(self.layout, self.bl_label, node_cats[self.bl_label])
 
 def make_class(name, bl_label):
-    name = 'NODEVIEW_MT_Open3D' + name + 'Menu'
+    name = 'NODEVIEW_MT_GISx' + name + 'Menu'
     clazz = type(name, (NodeViewMenuTemplate,), {'bl_label': bl_label})
     return clazz
 

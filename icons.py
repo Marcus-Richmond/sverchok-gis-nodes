@@ -10,7 +10,7 @@ class SvO3IconProvider(object):
 
     def get_icons(self):
         icons_dir = os.path.join(os.path.dirname(__file__), "icons")
-        icon_pattern = "sv_o3_*.png"
+        icon_pattern = "sv_gis_*.png"
         icon_path = os.path.join(icons_dir, icon_pattern)
         icon_files = [os.path.basename(x) for x in glob.glob(icon_path)]
 
@@ -20,7 +20,7 @@ class SvO3IconProvider(object):
             yield icon_id, os.path.join(icons_dir, icon_file)
 
 def register():
-    register_custom_icon_provider("sverchok_open3d", SvO3IconProvider())
+    register_custom_icon_provider("sverchok_gis", SvO3IconProvider())
 
 def unregister():
     pass
