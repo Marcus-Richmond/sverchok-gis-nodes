@@ -162,7 +162,7 @@ def register():
 
     cats_menu = make_categories() # This would load every sverchok-open3d category straight in the Sv menu
 
-    menu_category_provider = SvO3CategoryProvider("SVERCHOK_GIS", cats_menu, DOCS_LINK, use_custom_menu=True, custom_menu='NODEVIEW_MT_GIS')
+    menu_category_provider = SvGISCategoryProvider("SVERCHOK_GIS", cats_menu, DOCS_LINK, use_custom_menu=True, custom_menu='NODEVIEW_MT_GIS')
     register_extra_category_provider(menu_category_provider)
     examples.register()
 
