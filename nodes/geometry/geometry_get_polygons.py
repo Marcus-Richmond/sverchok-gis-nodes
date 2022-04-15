@@ -2,7 +2,7 @@ import bpy
 import sverchok
 from sverchok.utils.dummy_nodes import add_dummy
 
-from sverchok_open3d.dependencies import geopandas as gpd
+from sverchok_gis.dependencies import geopandas as gpd
 
 if gpd is None:
     add_dummy('SvSGNImportGeometryPolygon', 'load polygons', 'gpd')

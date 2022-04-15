@@ -9,7 +9,7 @@ import bpy
 
 # import pandas as pd   # these are not strictly necessary i think for this node as defined
 # import fiona
-from sverchok_open3d.dependencies import geopandas as gpd
+from sverchok_gis.dependencies import geopandas as gpd
 
 if gpd is None:
 
