@@ -124,7 +124,7 @@ node_cats = plain_node_list()
 
 
 
-class SvO3CategoryProvider(object):
+class SvGISCategoryProvider(object):
     def __init__(self, identifier, cats_menu, docs_link, use_custom_menu=False, custom_menu=None):
         self.identifier = identifier
         self.menu = cats_menu
@@ -135,7 +135,7 @@ class SvO3CategoryProvider(object):
     def get_categories(self):
         return self.menu
 
-our_menu_classes = []
+gis_menu_classes = []
 
 def reload_modules():
     global imported_modules
@@ -145,7 +145,7 @@ def reload_modules():
 
 
 def register():
-    global our_menu_classes
+    global gis_menu_classes  # ?
 
     debug("Registering sverchok-gis")
 
@@ -172,16 +172,17 @@ def register():
     show_welcome()
 
 def unregister():
-    global our_menu_classes
+    global gis_menu_classes
     if 'SVERCHOK_GIS' in nodeitems_utils._node_categories:
         #unregister_node_panels()
         nodeitems_utils.unregister_node_categories("SVERCHOK_GIS")
-    for clazz in our_menu_classes:
+    for clazz in gis_menu_classes:
         try:
             bpy.utils.unregister_class(clazz)
         except Exception as e:
             print("Can't unregister menu class %s" % clazz)
             print(e)
+
     unregister_extra_category_provider("SVERCHOK_GIS")
     #unregister_node_add_operators()
     unregister_nodes()

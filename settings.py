@@ -48,10 +48,11 @@ class SvO3Preferences(AddonPreferences):
         layout = self.layout
 
         def get_icon(package):
-            if package is None:
-                return 'CANCEL'
-            else:
-                return 'CHECKMARK'
+            # if package is None:
+            #     return 'CANCEL'
+            # else:
+            #     return 'CHECKMARK'
+            return 'CANCEL' if not package else 'CHECKMARK'
 
         box = layout.box()
 
