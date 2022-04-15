@@ -7,9 +7,9 @@ if bpy.app.version >= (2, 91, 0):
 else:
     PYPATH = bpy.app.binary_path_python
 
-import sverchok_open3d
+import sverchok_gis
 from sverchok.dependencies import draw_message
-from sverchok_open3d.dependencies import ex_dependencies, pip, ensurepip
+from sverchok_gis.dependencies import ex_dependencies, pip, ensurepip
 from sverchok.utils.context_managers import addon_preferences
 
 COMMITS_LINK = 'https://api.github.com/repos/Marcus-Richmond/sverchok-gis-nodes/commits'
