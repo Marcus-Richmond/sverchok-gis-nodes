@@ -1,10 +1,9 @@
-
 import os
 import glob
 
 from sverchok.ui.sv_icons import register_custom_icon_provider
 
-class SvO3IconProvider(object):
+class SvGISIconProvider(object):
     def __init__(self):
         pass
 
@@ -20,7 +19,7 @@ class SvO3IconProvider(object):
             yield icon_id, os.path.join(icons_dir, icon_file)
 
 def register():
-    register_custom_icon_provider("sverchok_gis", SvO3IconProvider())
+    register_custom_icon_provider("sverchok_gis", SvGISIconProvider())
 
 def unregister():
     pass
