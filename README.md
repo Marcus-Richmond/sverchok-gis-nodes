@@ -1,5 +1,5 @@
-SVERCHOK OPEN3D
-===============
+SVERCHOK GIS
+============
 
 This is an addon for [Blender][1], that extends [Sverchok][2] addon. 
 Bringing functionalities from one or more Python GIS/Shape libraries.
