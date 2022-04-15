@@ -1,15 +1,15 @@
 
 bl_info = {
-    "name": "Sverchok-Open3d",
-    "author": "Victor Doval",
+    "name": "Sverchok-GIS",
+    "author": "Various",
     "version": (0, 1, 0, 0),
-    "blender": (2, 81, 0),
+    "blender": (3, 1, 0),
     "location": "Node Editor",
     "category": "Node",
-    "description": "Sverchok Open 3d",
-    "warning": "",
-    "wiki_url": "https://github.com/vicdoval/sverchok-open3d",
-    "tracker_url": "https://github.com/vicdoval/sverchok-open3d/issues"
+    "description": "GIS nodes for Sverchok using geopandas",
+    "warning": "Under heavy development",
+    "wiki_url": "",
+    "tracker_url": ""
 }
 
 import sys
@@ -29,20 +29,20 @@ from sverchok.data_structure import updateNode, zip_long_repeat
 from sverchok.utils.logging import info, debug
 
 # make sverchok the root module name, (if sverchok dir not named exactly "sverchok")
-if __name__ != "sverchok_open3d":
-    sys.modules["sverchok_open3d"] = sys.modules[__name__]
+if __name__ != "sverchok_gis":
+    sys.modules["sverchok_gis"] = sys.modules[__name__]
 
 import sverchok_open3d
 from sverchok_open3d import icons, settings, sockets, examples, menu
 from sverchok_open3d.nodes_index import nodes_index
 from sverchok_open3d.utils import show_welcome
 
-DOCS_LINK = 'https://github.com/vicdoval/sverchok-open3d/tree/master/utils'
-MODULE_NAME = 'open3d'
+DOCS_LINK = ''
+MODULE_NAME = 'sverchok_gis'
 
 def make_node_list():
     modules = []
-    base_name = "sverchok_open3d.nodes"
+    base_name = "sverchok_gis.nodes"
     index = nodes_index()
     for category, items in index:
         for module_name, node_name in items:
@@ -67,7 +67,7 @@ reload_event = False
 
 if "bpy" in locals():
     reload_event = True
-    info("Reloading sverchok-open3d...")
+    info("Reloading sverchok-gis...")
     reload_modules()
 
 import bpy
@@ -87,7 +87,7 @@ def make_categories():
     menu_cats = []
     index = nodes_index()
     for category, items in index:
-        identifier = "SVERCHOK_OPEN3D_" + category.replace(' ', '_')
+        identifier = "SVERCHOK_GIS_" + category.replace(' ', '_')
         node_items = []
         for item in items:
             nodetype = item[1]
@@ -146,14 +146,14 @@ def reload_modules():
 def register():
     global our_menu_classes
 
-    debug("Registering sverchok-open3d")
+    debug("Registering sverchok-gis")
 
     settings.register()
     icons.register()
     sockets.register()
 
     register_nodes()
-    extra_nodes = importlib.import_module(".nodes", "sverchok_open3d")
+    extra_nodes = importlib.import_module(".nodes", "sverchok_gis")
     auto_gather_node_classes(extra_nodes)
 
     add_nodes_to_sv()
@@ -161,8 +161,8 @@ def register():
 
     cats_menu = make_categories() # This would load every sverchok-open3d category straight in the Sv menu
 
-    menu_category_provider = SvO3CategoryProvider("SVERCHOK_OPEN3D", cats_menu, DOCS_LINK, use_custom_menu=True, custom_menu='NODEVIEW_MT_Open3Dx')
-    register_extra_category_provider(menu_category_provider) #if 'SVERCHOK_OPEN3D' in nodeitems_utils._node_categories:
+    menu_category_provider = SvO3CategoryProvider("SVERCHOK_GIS", cats_menu, DOCS_LINK, use_custom_menu=True, custom_menu='NODEVIEW_MT_GIS')
+    register_extra_category_provider(menu_category_provider)
     examples.register()
 
     # with make_categories() This would load every sverchok-open3d category straight in the Sv menu
@@ -172,21 +172,20 @@ def register():
 
 def unregister():
     global our_menu_classes
-    if 'SVERCHOK_OPEN3D' in nodeitems_utils._node_categories:
+    if 'SVERCHOK_GIS' in nodeitems_utils._node_categories:
         #unregister_node_panels()
-        nodeitems_utils.unregister_node_categories("SVERCHOK_OPEN3D")
+        nodeitems_utils.unregister_node_categories("SVERCHOK_GIS")
     for clazz in our_menu_classes:
         try:
             bpy.utils.unregister_class(clazz)
         except Exception as e:
             print("Can't unregister menu class %s" % clazz)
             print(e)
-    unregister_extra_category_provider("SVERCHOK_OPEN3D")
+    unregister_extra_category_provider("SVERCHOK_GIS")
     #unregister_node_add_operators()
     unregister_nodes()
+
     menu.unregister()
-
-
     icons.unregister()
     sockets.unregister()
     settings.unregister()

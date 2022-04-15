@@ -23,13 +23,13 @@ except ImportError:
     print(message)
     sverchok = None
 
-opend3D_d = ex_dependencies["open3d"] = SvDependency("open3d", "http://www.open3d.org/")
-opend3D_d.pip_installable = True
-try:
-    import open3d
-    opend3D_d.message = "open3d package is available"
-    opend3D_d.module = open3d
-except ImportError:
-    opend3D_d.message = "open3d package is not available, the addon will not work"
-    info(opend3D_d.message)
-    open3d = None
+# opend3D_d = ex_dependencies["open3d"] = SvDependency("open3d", "http://www.open3d.org/")
+# opend3D_d.pip_installable = True
+# try:
+#     import open3d
+#     opend3D_d.message = "open3d package is available"
+#     opend3D_d.module = open3d
+# except ImportError:
+#     opend3D_d.message = "open3d package is not available, the addon will not work"
+#     info(opend3D_d.message)
+#     open3d = None
