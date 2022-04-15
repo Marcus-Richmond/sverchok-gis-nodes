@@ -1,18 +1,16 @@
 
 bl_info = {
-    "name": "Sverchok-GIS-Nodes",
-    "author": "Marcus Richmond",
+    "name": "Sverchok-Open3d",
+    "author": "Victor Doval",
     "version": (0, 1, 0, 0),
-    "blender": (3, 1, 0),
+    "blender": (2, 81, 0),
     "location": "Node Editor",
     "category": "Node",
-    "description": "Sverchok-GIS-Nodes",
+    "description": "Sverchok Open 3d",
     "warning": "",
-    "wiki_url": "",
-    "tracker_url": ""
+    "wiki_url": "https://github.com/vicdoval/sverchok-open3d",
+    "tracker_url": "https://github.com/vicdoval/sverchok-open3d/issues"
 }
-
-
 
 import sys
 import importlib
@@ -31,22 +29,20 @@ from sverchok.data_structure import updateNode, zip_long_repeat
 from sverchok.utils.logging import info, debug
 
 # make sverchok the root module name, (if sverchok dir not named exactly "sverchok")
-if __name__ != "sv_gis_nodes":
-    sys.modules["sv_gis_nodes"] = sys.modules[__name__]
+if __name__ != "sverchok_open3d":
+    sys.modules["sverchok_open3d"] = sys.modules[__name__]
 
-import sv_gis_nodes
-# from sv_gis_nodes import menu
-# from sv_gis_nodes.nodes_index import nodes_index
-# from sverchok_open3d.utils import show_welcome
+import sverchok_open3d
+from sverchok_open3d import icons, settings, sockets, examples, menu
+from sverchok_open3d.nodes_index import nodes_index
+from sverchok_open3d.utils import show_welcome
 
-DOCS_LINK = 'https://github.com/vicdoval/sverchok-gis-nodes/tree/master/utils'
-MODULE_NAME = 'sv_gis_nodes'
+DOCS_LINK = 'https://github.com/vicdoval/sverchok-open3d/tree/master/utils'
+MODULE_NAME = 'open3d'
 
 def make_node_list():
-    import sv_gis_nodes
-    from sv_gis_nodes.nodes_index import nodes_index
     modules = []
-    base_name = "sv_gis_nodes.nodes"
+    base_name = "sverchok_open3d.nodes"
     index = nodes_index()
     for category, items in index:
         for module_name, node_name in items:
@@ -57,8 +53,6 @@ def make_node_list():
     return modules
 
 def plain_node_list():
-    import sv_gis_nodes
-    from sv_gis_nodes.nodes_index import nodes_index
     node_cats = {}
     index = nodes_index()
     for category, items in index:
@@ -67,19 +61,16 @@ def plain_node_list():
             nodes.append([node_name])
         node_cats[category] = nodes
     return node_cats
-
-# imported_modules = [icons] + make_node_list()
-imported_modules = make_node_list()
+imported_modules = [icons] + make_node_list()
 
 reload_event = False
 
 if "bpy" in locals():
     reload_event = True
-    info("Reloading sv_gis_nodes...")
+    info("Reloading sverchok-open3d...")
     reload_modules()
 
 import bpy
-from sv_gis_nodes.nodes_index import nodes_index
 
 def register_nodes():
     node_modules = make_node_list()
@@ -96,7 +87,7 @@ def make_categories():
     menu_cats = []
     index = nodes_index()
     for category, items in index:
-        identifier = "SVERCHOK_GIS_" + category.replace(' ', '_')
+        identifier = "SVERCHOK_OPEN3D_" + category.replace(' ', '_')
         node_items = []
         for item in items:
             nodetype = item[1]
@@ -127,11 +118,12 @@ def add_nodes_to_sv():
                 SverchNodeItem.new(nodetype)
 
 
+
 node_cats = plain_node_list()
 
 
 
-class SvGISCategoryProvider(object):
+class SvO3CategoryProvider(object):
     def __init__(self, identifier, cats_menu, docs_link, use_custom_menu=False, custom_menu=None):
         self.identifier = identifier
         self.menu = cats_menu
@@ -142,7 +134,7 @@ class SvGISCategoryProvider(object):
     def get_categories(self):
         return self.menu
 
-gis_menu_classes = []
+our_menu_classes = []
 
 def reload_modules():
     global imported_modules
@@ -152,44 +144,49 @@ def reload_modules():
 
 
 def register():
-    global gis_menu_classes
+    global our_menu_classes
 
-    debug("Registering sv_gis_nodes!")
+    debug("Registering sverchok-open3d")
+
+    settings.register()
+    icons.register()
+    sockets.register()
 
     register_nodes()
-    extra_nodes = importlib.import_module(".nodes", "sv_gis_nodes")
+    extra_nodes = importlib.import_module(".nodes", "sverchok_open3d")
     auto_gather_node_classes(extra_nodes)
 
     add_nodes_to_sv()
-    
-    from sv_gis_nodes import menu
     menu.register()
 
     cats_menu = make_categories() # This would load every sverchok-open3d category straight in the Sv menu
 
-    menu_category_provider = SvGISCategoryProvider("SVERCHOK_GIS", cats_menu, DOCS_LINK, use_custom_menu=True, custom_menu='NODEVIEW_MT_GIS')
+    menu_category_provider = SvO3CategoryProvider("SVERCHOK_OPEN3D", cats_menu, DOCS_LINK, use_custom_menu=True, custom_menu='NODEVIEW_MT_Open3Dx')
     register_extra_category_provider(menu_category_provider) #if 'SVERCHOK_OPEN3D' in nodeitems_utils._node_categories:
-    # examples.register()
+    examples.register()
 
     # with make_categories() This would load every sverchok-open3d category straight in the Sv menu
     # our_menu_classes = make_extra_category_menus()
 
-    # show_welcome()
+    show_welcome()
 
 def unregister():
-    global gis_menu_classes
-    if 'SVERCHOK_GIS' in nodeitems_utils._node_categories:
+    global our_menu_classes
+    if 'SVERCHOK_OPEN3D' in nodeitems_utils._node_categories:
         #unregister_node_panels()
-        nodeitems_utils.unregister_node_categories("SVERCHOK_GIS")
-    for clazz in gis_menu_classes:
+        nodeitems_utils.unregister_node_categories("SVERCHOK_OPEN3D")
+    for clazz in our_menu_classes:
         try:
             bpy.utils.unregister_class(clazz)
         except Exception as e:
             print("Can't unregister menu class %s" % clazz)
             print(e)
-    unregister_extra_category_provider("SVERCHOK_GIS")
+    unregister_extra_category_provider("SVERCHOK_OPEN3D")
     #unregister_node_add_operators()
     unregister_nodes()
     menu.unregister()
 
 
+    icons.unregister()
+    sockets.unregister()
+    settings.unregister()
