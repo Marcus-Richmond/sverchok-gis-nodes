@@ -1,30 +1,24 @@
-
 import copy
 import numpy as np
 
 import bpy
-
-from bpy.props import FloatProperty, EnumProperty, BoolProperty, IntProperty
-
-from sverchok.node_tree import SverchCustomTreeNode
-from sverchok.data_structure import updateNode, zip_long_repeat, fullList
-from sverchok.utils.nodes_mixins.recursive_nodes import SvRecursiveNode
+from sverchok_gis.dependencies import geopandas as gpd
 from sverchok.utils.dummy_nodes import add_dummy
 
-from sverchok_open3d.dependencies import geopandas as gpd
-from sverchok_open3d.utils.triangle_mesh import triangle_mesh_viewer_map
 
 if gpd is None:
     add_dummy('SvSGNImportGeometryLine', 'Get Line Geometry', 'geopandas')
 else:
-    from mathutils import Vector
-    from bpy.props import FloatProperty
+    # from mathutils import Vector
+    # from bpy.props import FloatProperty
     from sverchok.node_tree import SverchCustomTreeNode
     from sverchok.data_structure import updateNode
-    import geopandas as gpd
-    import pandas as pd
-    import fiona
-    import numpy as np
+    
+    # -------------unless these are specifically used, they do not need to be imported. ------- #
+    
+    # import pandas as pd
+    # import fiona
+    # import numpy as np
 
 
     class SvSGNImportGeometryLine(SverchCustomTreeNode, bpy.types.Node):
