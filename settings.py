@@ -40,6 +40,14 @@ def sv_draw_gis_update_menu_in_panel(self, context):
 get_icon = lambda package: 'CANCEL' if not package else 'CHECKMARK'
 
 class SvGISPreferences(AddonPreferences):
+    """
+
+    This section describes the UI area in the addon preferences panel.
+    - which deps to install
+    - potentially one-click to install
+    - here we can offer links to further information about installing deps ( if user encounters issues )
+
+    """
     bl_idname = __package__
 
     available_new_version: bpy.props.BoolProperty(default=False)
@@ -52,7 +60,13 @@ class SvGISPreferences(AddonPreferences):
 
         box.label(text="Dependencies:")
         draw_message(box, "sverchok", dependencies=ex_dependencies)
+        # box.label(text="below is a list of python modules that need to be installed if you wish to use all gis nodes")
+        # 
+        draw_message(box, "pandas", dependencies=ex_dependencies)
+        draw_message(box, "gdal", dependencies=ex_dependencies)
+        draw_message(box, "fiona", dependencies=ex_dependencies)
         draw_message(box, "geopandas", dependencies=ex_dependencies)
+
 
         row = layout.row()
         row.operator('node.sv_show_latest_commits').commits_link = COMMITS_LINK
