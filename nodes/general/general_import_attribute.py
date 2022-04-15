@@ -4,12 +4,15 @@
 #
 # SPDX-License-Identifier: GPL3
 # License-Filename: LICENSE
+DEBUG = True
 
 import bpy
+import sverchok
 
 # import pandas as pd   # these are not strictly necessary i think for this node as defined
 # import fiona
 from sverchok_gis.dependencies import geopandas as gpd
+
 
 if gpd is None:
 
@@ -48,14 +51,17 @@ else:
             path = self.inputs["GPKG Path"].sv_get(deepcopy = False)
             layername = self.inputs["Layer Name"].sv_get(deepcopy = False)
             attribute = self.inputs["Attribute Name"].sv_get(deepcopy = False)
-            
+
             # ensure some kind of output even if nothing was found.
             listAttribute = []
+            if path:
+                path = str(path[0][0])
+            if layername:
+                layername = str(layername[0][0])   # likely not necessary to cast to string.
+            if attribute:    
+                attribute = str(attribute[0][0])
 
             if path and layername and attribute:
-                layername = str(layername[0][0])   # likely not necessary to cast to string.
-                attribute = str(attribute[0][0])
-                path = str(path[0][0])
 
                 # read in gpkg layer as geopandas data frame, and make alias
                 gpd1 = gpd.read_file(path, layer=layername)
@@ -65,6 +71,21 @@ else:
                 for features in range(len(gi['features'])):
                     value = [gi['features'][features]['properties'][attribute]]
                     listAttribute.append(value)
+
+            if DEBUG and path:
+
+                if layername:
+                    gpd1 = gpd.read_file(path, layer=layername)
+                    gi = gpd1.__geo_interface__
+                else:
+                    gpd1 = gpd.read_file(path)
+                    gi = gpd1.__geo_interface__
+
+                if not hasattr(sverchok, 'gis_breakpoint'):
+                    sverchok.gis_breakpoint = {}
+
+                sverchok.gis_breakpoint = gi
+                listAttribute = gi
                 
             self.outputs["Attribute Values"].sv_set(listAttribute)
        
