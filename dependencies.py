@@ -1,4 +1,3 @@
-
 from sverchok.dependencies import SvDependency
 
 ex_dependencies = dict()
@@ -33,3 +32,14 @@ except ImportError:
 #     opend3D_d.message = "open3d package is not available, the addon will not work"
 #     info(opend3D_d.message)
 #     open3d = None
+
+geopandas_d = ex_dependencies["geopandas"] = SvDependency("geopandas", "https://geopandas.org/en/stable/")
+geopandas_d.pip_installable = True
+try:
+    import geopandas
+    geopandas_d.message = "geopandas package is available"
+    geopandas_d.module = open3d
+except ImportError:
+    geopandas_d.message = "geopandas package is not available, the addon will not work"
+    info(geopandas_d.message)
+    geopandas = None
