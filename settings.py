@@ -61,7 +61,7 @@ class SvGISPreferences(AddonPreferences):
         box.label(text="Dependencies:")
         draw_message(box, "sverchok", dependencies=ex_dependencies)
         # box.label(text="below is a list of python modules that need to be installed if you wish to use all gis nodes")
-        # 
+        # https://github.com/Marcus-Richmond/sverchok-gis-nodes/issues/7
         draw_message(box, "pandas", dependencies=ex_dependencies)
         draw_message(box, "gdal", dependencies=ex_dependencies)
         draw_message(box, "fiona", dependencies=ex_dependencies)
