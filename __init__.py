@@ -29,16 +29,16 @@ from sverchok.data_structure import updateNode, zip_long_repeat
 from sverchok.utils.logging import info, debug
 
 DOCS_LINK = ''
-MODULE_NAME = 'sverchok_gis'
+MODULE_NAME = "sverchok_gis"
 
 # make sverchok the root module name, (if sverchok dir not named exactly "sverchok")
-if __name__ != "sverchok_gis":
-    sys.modules["sverchok_gis"] = sys.modules[__name__]
+if __name__ != MODULE_NAME:
+    sys.modules[MODULE_NAME] = sys.modules[__name__]
 
-import sverchok_open3d
-from sverchok_open3d import icons, settings, sockets, examples, menu
-from sverchok_open3d.nodes_index import nodes_index
-from sverchok_open3d.utils import show_welcome
+import sverchok_gis
+from sverchok_gis import icons, settings, sockets, examples, menu
+from sverchok_gis.nodes_index import nodes_index
+# from sverchok_gis.utils import show_welcome
 
 
 def make_node_list():

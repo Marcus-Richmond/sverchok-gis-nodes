@@ -1,10 +1,9 @@
 def nodes_index():
     return [
     ("General", [
-        ("general.o3d_import", "SvO3ImportNode"),
-        ("general.o3d_export", "SvO3ExportNode")]),
+        ("general.general_import_attribute", "SvSGNImportAttribute"),]),
     ("Geometry", [
-        ("geometry.point_cloud_in", "SvO3PointCloudInNode"),
-        ("geometry.point_cloud_out", "SvO3PointCloudOutNode"),
-        ("geometry.point_cloud_downsample", "SvO3PointCloudDownSampleNode")])
+        ("geometry.geometry_get_points",     "SvSGNImportGeometryPoint"),
+        ("geometry.geometry_get_lines",      "SvSGNImportGeometryLine"),
+        ("geometry.geometry_get_polygons",   "SvSGNImportGeometryPolygon")])
     ]
