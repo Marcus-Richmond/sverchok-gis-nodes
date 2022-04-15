@@ -2,9 +2,9 @@ from pathlib import Path
 
 import bpy
 from sverchok.ui.sv_examples_menu import add_extra_examples, make_submenu_classes
-import sverchok_gis_nodes
+import sverchok_gis
 
-EXAMPLES_PATH = Path(sverchok_gis_nodes.__file__).parent / 'json_examples'
+EXAMPLES_PATH = Path(sverchok_gis.__file__).parent / 'json_examples'
 
 def example_categories_names():
     for category_path in EXAMPLES_PATH.iterdir():
