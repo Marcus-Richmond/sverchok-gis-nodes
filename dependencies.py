@@ -38,7 +38,7 @@ geopandas_d.pip_installable = True
 try:
     import geopandas
     geopandas_d.message = "geopandas package is available"
-    geopandas_d.module = open3d
+    geopandas_d.module = geopandas
 except ImportError:
     geopandas_d.message = "geopandas package is not available, the addon will not work"
     info(geopandas_d.message)

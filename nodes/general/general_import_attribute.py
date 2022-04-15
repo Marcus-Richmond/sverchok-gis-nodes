@@ -70,7 +70,7 @@ else:
        
 
 def register():
-    if o3d is not None: bpy.utils.register_class(SvSGNImportAttribute)
+    if gpd is not None: bpy.utils.register_class(SvSGNImportAttribute)
 
 def unregister():
-    if o3d is not None: bpy.utils.unregister_class(SvSGNImportAttribute)
+    if gpd is not None: bpy.utils.unregister_class(SvSGNImportAttribute)

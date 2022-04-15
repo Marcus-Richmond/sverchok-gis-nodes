@@ -70,9 +70,9 @@ else:
             
 
 def register():
-    if o3d is not None:
+    if gpd is not None:
         bpy.utils.register_class(SvSGNImportGeometryPoint)
 
 def unregister():
-    if o3d is not None:    
+    if gpd is not None:    
         bpy.utils.unregister_class(SvSGNImportGeometryPoint)
