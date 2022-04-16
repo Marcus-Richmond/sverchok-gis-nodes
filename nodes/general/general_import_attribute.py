@@ -8,7 +8,7 @@ DEBUG = True
 
 import bpy
 import sverchok
-
+import sverchok_gis
 # import pandas as pd   # these are not strictly necessary i think for this node as defined
 # import fiona
 from sverchok_gis.dependencies import geopandas as gpd
@@ -89,9 +89,5 @@ else:
                 
             self.outputs["Attribute Values"].sv_set(listAttribute)
        
-
-def register():
-    if gpd is not None: bpy.utils.register_class(SvSGNImportAttribute)
-
-def unregister():
-    if gpd is not None: bpy.utils.unregister_class(SvSGNImportAttribute)
+classes = [SvSGNImportAttribute]
+register, unregister = sverchok_gis.utils.registration_class_factory_deps(classes, deps=[gpd])

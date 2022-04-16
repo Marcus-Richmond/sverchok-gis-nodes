@@ -1,7 +1,7 @@
 import bpy
+import sverchok_gis
 from sverchok_gis.dependencies import geopandas as gpd
 from sverchok.utils.dummy_nodes import add_dummy
-
 
 if gpd is None:
     add_dummy('SvSGNImportGeometryLine', 'Get Line Geometry', 'geopandas')
@@ -104,29 +104,6 @@ else:
             self.outputs["Vertices"].sv_set(Vertices)
             self.outputs["Edges"].sv_set(Edges)      
 
-"""
-def sverchok.utils.registration_class_factory_deps(classes, deps=None):
-
-    import bpy
-    def register():
-        if all in deps:
-            _ = [bpy.utils.register_class(c) for c in classes]
-
-    def unregister():
-        if all in deps:
-            _ = [bpy.utils.unregister_class(c) for c in classes]
-
-    return register, unregister
 
 classes = [SvSGNImportGeometryLine]
-register, unregister = sverchok.utils.registration_class_factory_deps(classes, deps=[gpd])
-
-"""
-
-def register():
-    if gpd is not None:
-        bpy.utils.register_class(SvSGNImportGeometryLine)
-
-def unregister():
-    if gpd is not None:
-        bpy.utils.unregister_class(SvSGNImportGeometryLine)
+register, unregister = sverchok_gis.utils.registration_class_factory_deps(classes, deps=[gpd])
