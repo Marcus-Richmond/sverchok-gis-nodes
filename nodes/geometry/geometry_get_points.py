@@ -1,7 +1,7 @@
 import bpy
 from sverchok.utils.dummy_nodes import add_dummy
 from sverchok_gis.dependencies import geopandas as gpd
-
+import sverchok_gis
 
 if gpd is None:
 
@@ -67,12 +67,13 @@ else:
                 
             self.outputs["Vertices"].sv_set(Vertices)
             
-            
+classes = [SvSGNImportGeometryPoint]
+register, unregister = sverchok_gis.utils.registration_class_factory_deps(classes, deps=[gpd])            
 
-def register():
-    if gpd is not None:
-        bpy.utils.register_class(SvSGNImportGeometryPoint)
+# def register():
+#     if gpd is not None:
+#         bpy.utils.register_class(SvSGNImportGeometryPoint)
 
-def unregister():
-    if gpd is not None:    
-        bpy.utils.unregister_class(SvSGNImportGeometryPoint)
+# def unregister():
+#     if gpd is not None:    
+#         bpy.utils.unregister_class(SvSGNImportGeometryPoint)

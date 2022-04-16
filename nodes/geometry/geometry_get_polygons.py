@@ -1,5 +1,6 @@
 import bpy
 import sverchok
+import sverchok_gis
 from sverchok.utils.dummy_nodes import add_dummy
 
 from sverchok_gis.dependencies import geopandas as gpd
@@ -122,13 +123,15 @@ else:
             self.outputs["Edges"].sv_set(Edges)
             self.outputs["Polygons"].sv_set(Polygons)
             
+classes = [SvSGNImportGeometryPolygon]
+register, unregister = sverchok_gis.utils.registration_class_factory_deps(classes, deps=[gpd])            
             
 
-def register():
-    if gpd is not None:
-        bpy.utils.register_class(SvSGNImportGeometryPolygon)
+# def register():
+#     if gpd is not None:
+#         bpy.utils.register_class(SvSGNImportGeometryPolygon)
 
-def unregister():
-    if gpd is not None:    
-        bpy.utils.unregister_class(SvSGNImportGeometryPolygon)
+# def unregister():
+#     if gpd is not None:    
+#         bpy.utils.unregister_class(SvSGNImportGeometryPolygon)
 
