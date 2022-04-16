@@ -66,11 +66,14 @@ class SvGISPreferences(AddonPreferences):
         draw_message(box, "sverchok", dependencies=ex_dependencies)
         # box.label(text="below is a list of python modules that need to be installed if you wish to use all gis nodes")
         # https://github.com/Marcus-Richmond/sverchok-gis-nodes/issues/7
-        draw_message(box, "pandas", dependencies=ex_dependencies)
-        draw_message(box, "gdal", dependencies=ex_dependencies)
-        draw_message(box, "fiona", dependencies=ex_dependencies)
-        draw_message(box, "geopandas", dependencies=ex_dependencies)
+        # draw_message(box, "pandas", dependencies=ex_dependencies)
+        # draw_message(box, "gdal", dependencies=ex_dependencies)
+        # draw_message(box, "fiona", dependencies=ex_dependencies)
+        # draw_message(box, "geopandas", dependencies=ex_dependencies)
         # shapely?
+        row = box.row()
+        row.label(text="For now i recommend reading: ")
+        row.operator('wm.url_open', text="sverchok-gis-nodes/issues/7").url = "https://github.com/Marcus-Richmond/sverchok-gis-nodes/issues/7"
 
         row = layout.row()
         row.operator('node.sv_show_latest_commits').commits_link = COMMITS_LINK
