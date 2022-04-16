@@ -40,7 +40,7 @@ def registration_class_factory_deps(classes, deps=None):
 
     def unregister():
         if all(deps):
-            _ = [bpy.utils.unregister_class(c) for c in classes]
+            _ = [bpy.utils.unregister_class(c) for c in reversed(classes)]
 
     return register, unregister
 
