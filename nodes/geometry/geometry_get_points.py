@@ -9,8 +9,8 @@ if gpd is None:
 
 else:
 
-    import pandas as pd
-    import fiona
+    # import pandas as pd
+    # import fiona
 
     from sverchok.node_tree import SverchCustomTreeNode
     from sverchok.data_structure import updateNode

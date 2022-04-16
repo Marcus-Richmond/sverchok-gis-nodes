@@ -38,7 +38,7 @@ if __name__ != MODULE_NAME:
 import sverchok_gis
 from sverchok_gis import icons, settings, sockets, examples, menu
 from sverchok_gis.nodes_index import nodes_index
-# from sverchok_gis.utils import show_welcome
+from sverchok_gis.utils import show_welcome
 
 
 def make_node_list():
@@ -169,7 +169,7 @@ def register():
     # with make_categories() This would load every sverchok-open3d category straight in the Sv menu
     # gis_menu_classes = make_extra_category_menus()
 
-    # show_welcome()
+    show_welcome()
 
 def unregister():
     global gis_menu_classes

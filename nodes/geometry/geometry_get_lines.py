@@ -1,6 +1,3 @@
-import copy
-import numpy as np
-
 import bpy
 from sverchok_gis.dependencies import geopandas as gpd
 from sverchok.utils.dummy_nodes import add_dummy
