@@ -19,7 +19,7 @@ import nodeitems_utils
 import bl_operators
 
 import sverchok
-from sverchok.core import sv_registration_utils, make_node_list
+from sverchok.core import sv_registration_utils #, make_node_list
 from sverchok.utils import auto_gather_node_classes, get_node_class_reference
 from sverchok.menu import SverchNodeItem, node_add_operators, SverchNodeCategory, register_node_panels, unregister_node_panels, unregister_node_add_operators
 from sverchok.utils.extra_categories import register_extra_category_provider, unregister_extra_category_provider
@@ -62,6 +62,7 @@ def plain_node_list():
             nodes.append([node_name])
         node_cats[category] = nodes
     return node_cats
+
 imported_modules = [icons] + make_node_list()
 
 reload_event = False

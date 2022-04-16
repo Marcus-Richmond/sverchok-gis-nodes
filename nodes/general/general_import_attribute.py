@@ -85,9 +85,9 @@ else:
                     sverchok.gis_breakpoint = {}
 
                 sverchok.gis_breakpoint = gi
-                listAttribute = gi
+                listAttribute = [gi]
                 
             self.outputs["Attribute Values"].sv_set(listAttribute)
        
 classes = [SvSGNImportAttribute]
-register, unregister = sverchok_gis.utils.registration_class_factory_deps(classes, deps=[gpd])
+register, unregister = sverchok_gis.utils.register_class_factory_deps(classes, deps=[gpd])

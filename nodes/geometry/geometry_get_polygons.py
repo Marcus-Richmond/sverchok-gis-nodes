@@ -124,7 +124,7 @@ else:
             self.outputs["Polygons"].sv_set(Polygons)
             
 classes = [SvSGNImportGeometryPolygon]
-register, unregister = sverchok_gis.utils.registration_class_factory_deps(classes, deps=[gpd])            
+register, unregister = sverchok_gis.utils.register_class_factory_deps(classes, deps=[gpd])            
             
 
 # def register():

@@ -68,7 +68,7 @@ else:
             self.outputs["Vertices"].sv_set(Vertices)
             
 classes = [SvSGNImportGeometryPoint]
-register, unregister = sverchok_gis.utils.registration_class_factory_deps(classes, deps=[gpd])            
+register, unregister = sverchok_gis.utils.register_class_factory_deps(classes, deps=[gpd])            
 
 # def register():
 #     if gpd is not None:

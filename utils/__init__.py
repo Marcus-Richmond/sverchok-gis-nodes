@@ -23,7 +23,7 @@ def show_welcome():
         print(with_color.format(line))
 
 
-def registration_class_factory_deps(classes, deps=None):
+def register_class_factory_deps(classes, deps=None):
     """
     usage
     from sverchok_gis.utils import registration_class_factory_deps
