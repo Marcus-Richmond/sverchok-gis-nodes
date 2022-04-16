@@ -32,8 +32,12 @@ def register_class_factory_deps(classes, deps=None):
     register, unregister = sverchok.utils.registration_class_factory_deps(classes, deps=[gpd])
 
     """
-
     import bpy
+
+    if not deps:
+        return bpy.utils.register_classes_factory(classes)
+
+
     def register():
         if all(deps):
             _ = [bpy.utils.register_class(c) for c in classes]
