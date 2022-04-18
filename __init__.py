@@ -26,7 +26,6 @@ if __name__ != MODULE_NAME:
 
 import sverchok_gis
 from sverchok_gis import icons, settings, sockets, examples, menu, nodes
-# from sverchok_gis.nodes_index import nodes_index
 from sverchok_gis.utils import show_welcome, categories
 from sverchok_gis.utils._load_addon_architecture import make_node_list, plain_node_list
 from sverchok_gis.utils._load_addon_architecture import register_all, unregister_all
@@ -47,7 +46,7 @@ node_cats = plain_node_list()
 def reload_modules():
     global imported_modules
     for im in imported_modules:
-        debug("Reloading: %s", im)
+        debug(f"Reloading: {im}")
         importlib.reload(im)
 
 
