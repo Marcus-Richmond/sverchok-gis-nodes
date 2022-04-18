@@ -4,6 +4,9 @@ from sverchok_gis.nodes_index import nodes_index
 from sverchok_gis.dependencies import geopandas as gpd
 
 
+node_cats = {category: [[node_name] for _, node_name in items] for category, items in nodes_index()}
+
+
 class NODEVIEW_MT_GIS(bpy.types.Menu):
     bl_label = "GIS Menu"
 
@@ -18,7 +21,6 @@ class NODEVIEW_MT_GIS(bpy.types.Menu):
             layout.menu("NODEVIEW_MT_GISGeneralMenu")
             layout.menu("NODEVIEW_MT_GISGeometryMenu")
 
-node_cats = {category: [[node_name] for _, node_name in items] for category, items in nodes_index()}
 
 # does not get registered
 class NodeViewMenuTemplate(bpy.types.Menu):
