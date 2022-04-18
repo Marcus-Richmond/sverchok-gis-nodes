@@ -3,17 +3,9 @@ from sverchok.ui.nodeview_space_menu import make_extra_category_menus, layout_dr
 from sverchok_gis.nodes_index import nodes_index
 from sverchok_gis.dependencies import geopandas as gpd
 
-def plain_node_list():
-    node_categories = {}
-    index = nodes_index()
-    for category, items in index:
-        nodes = []
-        for _, node_name in items:
-            nodes.append([node_name])
-        node_categories[category] = nodes
-    return node_categories
 
-node_cats = plain_node_list()
+node_cats = {category: [[node_name] for _, node_name in items] for category, items in nodes_index()}
+
 
 class NODEVIEW_MT_GIS(bpy.types.Menu):
     bl_label = "GIS Menu"
@@ -26,7 +18,6 @@ class NODEVIEW_MT_GIS(bpy.types.Menu):
 
             layout.operator('node.sv_ex_pip_install', text="Install geopandas Library with PIP").package = "geopandas"
         else:
-            # layout_draw_categories(self.layout, self.bl_label, node_cats['Utils'])
             layout.menu("NODEVIEW_MT_GISGeneralMenu")
             layout.menu("NODEVIEW_MT_GISGeometryMenu")
 
