@@ -7,6 +7,7 @@
 # SPDX-License-Identifier: GPL3
 # License-Filename: LICENSE
 
+import ast
 import bpy
 import sverchok
 import sverchok_gis
@@ -26,11 +27,13 @@ class SvSGNLoadGISData(SverchCustomTreeNode, bpy.types.Node):
     bl_label = 'Import Attribute Node'
     bl_icon = 'RNA'
     
-    key_name : bpy.props.StringProperty(name="key name", default="layer: some_layer", update=updateNode)
+    parameters : bpy.props.StringProperty(
+        name="parameters", 
+        default="{\"layer\": \"some_layer\"}", update=updateNode)
 
     def sv_init(self, context):
         self.inputs.new('SvFilePathSocket', "GPKG Path")
-        self.inputs.new('SvStringsSocket', "Key Name").prop_name = 'key_name'
+        self.inputs.new('SvStringsSocket', "parameters").prop_name = 'parameters'
         self.outputs.new('SvStringsSocket', "GIS data")
 
     def process(self):  
@@ -49,15 +52,16 @@ class SvSGNLoadGISData(SverchCustomTreeNode, bpy.types.Node):
         gis_data = []
 
         if path: path = str(path[0][0])
-        if key_name: key_name = str(key_name[0][0])
+        if parameters: parameters = ast.literal_eval(str(key_name[0][0]))
 
         if path:
-            if key_name:
-                ...
-            else:
-                gpd1 = gpd_read_file(path, layer=layername)
-                gi = gpd1.__geo_interface__
 
+            if not parameters:
+                # empty disk should be allowed.
+                parameters = dict()
+
+            gpd1 = gpd_read_file(path, **parameters)
+            gi = gpd1.__geo_interface__
             gis_data.append(gi)
             
         self.outputs["GIS data"].sv_set(gis_data)
