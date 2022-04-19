@@ -94,4 +94,7 @@ def register():
 
 def unregister():
     bpy.utils.unregister_class(SvGISPreferences)
-    bpy.types.SV_PT_SverchokUtilsPanel.remove(sv_draw_gis_update_menu_in_panel)
+    try:
+        bpy.types.SV_PT_SverchokUtilsPanel.remove(sv_draw_gis_update_menu_in_panel)
+    except:
+        print("exeption during settings.unregister, not a problem.")
