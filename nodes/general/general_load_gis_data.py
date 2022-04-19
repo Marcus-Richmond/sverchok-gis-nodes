@@ -35,6 +35,11 @@ class SvSGNLoadGISData(SverchCustomTreeNode, bpy.types.Node):
 
     def process(self):  
         
+        if not gpd_read_file:
+            self.outputs["GIS data"].sv_set([[]])
+            # display on node that gpd has not been found.
+            return
+
         # create initial variables      
         path = self.inputs[0].sv_get(deepcopy=False)
         key_name = self.inputs[1].sv_get(deepcopy=False)
@@ -50,17 +55,12 @@ class SvSGNLoadGISData(SverchCustomTreeNode, bpy.types.Node):
             if key_name:
                 ...
             else:
-
-                if gpd_read_file:
-                    gpd1 = gpd_read_file(path, layer=layername)
-                    gi = gpd1.__geo_interface__
-                else:
-                    # should display on node that gpd not found.
-                    ...
+                gpd1 = gpd_read_file(path, layer=layername)
+                gi = gpd1.__geo_interface__
 
             gis_data.append(gi)
             
         self.outputs["GIS data"].sv_set(gis_data)
        
 classes = [SvSGNLoadGISData]
-register, unregister = sverchok_gis.utils.register_class_factory_deps(classes, deps=[])
+register, unregister = bpy.utils.register_class_factory(classes)

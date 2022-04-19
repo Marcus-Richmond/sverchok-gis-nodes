@@ -2,6 +2,7 @@ def nodes_index():
     return [
     ("General", [
         ("general.general_import_attribute", "SvSGNImportAttribute"),
+        ("general.general_load_gis_data",    "SvSGNLoadGISData"),
         ("general.general_get_keys_and_values", "SvSGNGetKeysAndValues"),]),
     ("Geometry", [
         ("geometry.geometry_get_points",     "SvSGNImportGeometryPoint"),
