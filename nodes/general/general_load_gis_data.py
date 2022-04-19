@@ -39,31 +39,29 @@ class SvSGNLoadGISData(SverchCustomTreeNode, bpy.types.Node):
     def process(self):  
         
         if not gpd_read_file:
-            self.outputs["GIS data"].sv_set([[]])
             # display on node that gpd has not been found.
+            self.outputs["GIS data"].sv_set([[]])
             return
 
         # create initial variables      
         path = self.inputs[0].sv_get(deepcopy=False)
-        key_name = self.inputs[1].sv_get(deepcopy=False)
+        parameters = self.inputs[1].sv_get(deepcopy=False)
 
         # ensure some kind of output even if nothing was found.
         gi = []
         gis_data = []
 
         if path: path = str(path[0][0])
-        if parameters: parameters = ast.literal_eval(str(key_name[0][0]))
+        if parameters: parameters = ast.literal_eval(str(parameters[0][0]))
 
         if path:
-
             if not parameters:
-                # empty disk should be allowed.
                 parameters = dict()
 
             gpd1 = gpd_read_file(path, **parameters)
             gi = gpd1.__geo_interface__
-            gis_data.append(gi)
-            
+        
+        gis_data.append(gi)
         self.outputs["GIS data"].sv_set(gis_data)
        
 classes = [SvSGNLoadGISData]
