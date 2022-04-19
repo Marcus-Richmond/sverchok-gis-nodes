@@ -13,4 +13,3 @@ def get_loader():
         return None
     else:
         return gpd.read_file
-

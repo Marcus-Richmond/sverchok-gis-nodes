@@ -20,11 +20,11 @@ gpd_read_file = gis_loader.get_loader()
 
 class SvSGNLoadGISData(SverchCustomTreeNode, bpy.types.Node):
     """
-    Triggers: load GIS data
-    Tooltip: Import GPKG layer
+    Triggers: load GIS data using parameters
+    Tooltip: Import GPKG data
     """
-    bl_idname = 'SvSGNImportAttribute'  # should be add to `sverchok/index.md` file
-    bl_label = 'Import Attribute Node'
+    bl_idname = 'SvSGNLoadGISData'
+    bl_label = 'Load GIS data'
     bl_icon = 'RNA'
     
     parameters : bpy.props.StringProperty(
@@ -32,6 +32,7 @@ class SvSGNLoadGISData(SverchCustomTreeNode, bpy.types.Node):
         default="{\"layer\": \"some_layer\"}", update=updateNode)
 
     def sv_init(self, context):
+        self.width = 300
         self.inputs.new('SvFilePathSocket', "GPKG Path")
         self.inputs.new('SvStringsSocket', "parameters").prop_name = 'parameters'
         self.outputs.new('SvStringsSocket', "GIS data")
@@ -51,8 +52,10 @@ class SvSGNLoadGISData(SverchCustomTreeNode, bpy.types.Node):
         gi = []
         gis_data = []
 
-        if path: path = str(path[0][0])
-        if parameters: parameters = ast.literal_eval(str(parameters[0][0]))
+        if path:
+            path = str(path[0][0])
+        if parameters:
+            parameters = ast.literal_eval(str(parameters[0][0]))
 
         if path:
             if not parameters:
@@ -65,4 +68,4 @@ class SvSGNLoadGISData(SverchCustomTreeNode, bpy.types.Node):
         self.outputs["GIS data"].sv_set(gis_data)
        
 classes = [SvSGNLoadGISData]
-register, unregister = bpy.utils.register_class_factory(classes)
+register, unregister = bpy.utils.register_classes_factory(classes)
