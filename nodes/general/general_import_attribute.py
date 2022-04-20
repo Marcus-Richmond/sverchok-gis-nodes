@@ -43,7 +43,7 @@ else:
             self.inputs.new('SvStringsSocket', "Layer Name").prop_name = 'layer_name'
             self.inputs.new('SvStringsSocket', "Attribute Name").prop_name = 'attribute_name'
             
-            self.outputs.new('SvStringsSocket', "Attribute Values")
+            self.outputs.new('SvStringsSocket', "Attribute Dictionary")
 
         def process(self):  
             
@@ -87,7 +87,7 @@ else:
                 sverchok.gis_breakpoint = gi
                 listAttribute = [gi]
                 
-            self.outputs["Attribute Values"].sv_set(listAttribute)
+            self.outputs["Attribute Dictionary"].sv_set(listAttribute)
        
 classes = [SvSGNImportAttribute]
 register, unregister = sverchok_gis.utils.register_class_factory_deps(classes, deps=[gpd])
