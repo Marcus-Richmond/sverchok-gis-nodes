@@ -44,6 +44,7 @@ else:
             self.inputs.new('SvStringsSocket', "Attribute Name").prop_name = 'attribute_name'
             
             self.outputs.new('SvStringsSocket', "Attribute Dictionary")
+            self.outputs.new('SvStringsSocket', "Attribute List")
 
         def process(self):  
             
@@ -51,9 +52,12 @@ else:
             path = self.inputs["GPKG Path"].sv_get(deepcopy = False)
             layername = self.inputs["Layer Name"].sv_get(deepcopy = False)
             attribute = self.inputs["Attribute Name"].sv_get(deepcopy = False)
+            
+            # create empty lists
+            dictAttribute = []
+            listAttribute = []
 
             # ensure some kind of output even if nothing was found.
-            listAttribute = []
             if path:
                 path = str(path[0][0])
             if layername:
@@ -69,8 +73,10 @@ else:
 
                 # loop over gi to extract and collect attributes from feature properties.
                 for features in range(len(gi['features'])):
-                    value = [gi['features'][features]['properties'][attribute]]
+                    value = gi['features'][features]['properties'][attribute]
                     listAttribute.append(value)
+
+            listAttribute = [listAttribute]
 
             if DEBUG and path:
 
@@ -85,9 +91,19 @@ else:
                     sverchok.gis_breakpoint = {}
 
                 sverchok.gis_breakpoint = gi
-                listAttribute = [gi]
+                dictAttribute = [gi]
                 
-            self.outputs["Attribute Dictionary"].sv_set(listAttribute)
+            self.outputs["Attribute Dictionary"].sv_set(dictAttribute)
+            self.outputs["Attribute List"].sv_set(listAttribute)
+
+
+
        
 classes = [SvSGNImportAttribute]
 register, unregister = sverchok_gis.utils.register_class_factory_deps(classes, deps=[gpd])
+
+# if __name__ == "__main__":
+#     if hasattr(bpy.types, "SvSGNImportAttribute"):
+#         bpy.utils.unregister(SvSGNImportAttribute)
+
+#     register()
