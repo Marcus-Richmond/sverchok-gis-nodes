@@ -15,10 +15,11 @@ import sverchok_gis
 from sverchok.node_tree import SverchCustomTreeNode
 from sverchok.data_structure import updateNode
 from sverchok_gis.utils import gis_loader
+from sverchok_gis.utils.modules.mixin_debug_dict import SvSGNDebugMixinDict
 
 gpd_read_file = gis_loader.get_loader()
 
-class SvSGNLoadGISData(SverchCustomTreeNode, bpy.types.Node):
+class SvSGNLoadGISData(SverchCustomTreeNode, bpy.types.Node, SvSGNDebugMixinDict):
     """
     Triggers: load GIS data using parameters
     Tooltip: Import GPKG data
@@ -63,6 +64,9 @@ class SvSGNLoadGISData(SverchCustomTreeNode, bpy.types.Node):
 
             gpd1 = gpd_read_file(path, **parameters)
             gi = gpd1.__geo_interface__
+
+            if self.sgn_debug_mode:
+                self.set_debug_dict_new_pair("first_run", gi)
         
         gis_data.append(gi)
         self.outputs["GIS data"].sv_set(gis_data)
