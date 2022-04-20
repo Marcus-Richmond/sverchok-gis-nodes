@@ -9,7 +9,7 @@ class SvSGNDebugMixinDict():
     correctly, and reset if necessary.
     """
     sgn_debug_dict = dict()    # special kind of variable.
-    sgn_debug_mode: bpy.types.BoolProperty(default=False, name="debug mode", description="debug switch for node")
+    sgn_debug_mode: bpy.props.BoolProperty(default=False, name="debug mode", description="debug switch for node")
 
     def get_current_debug_dict(self):
         self.n_id = node_id(self)
