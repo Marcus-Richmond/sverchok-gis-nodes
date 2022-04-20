@@ -25,7 +25,7 @@ if __name__ != MODULE_NAME:
     sys.modules[MODULE_NAME] = sys.modules[__name__]
 
 import sverchok_gis
-from sverchok_gis import icons, settings, sockets, examples, menu, nodes
+from sverchok_gis import icons, settings, sockets, examples, menu, nodes, keymaps
 from sverchok_gis.utils import show_welcome, categories
 from sverchok_gis.utils._load_addon_architecture import make_node_list
 from sverchok_gis.utils._load_addon_architecture import register_all, unregister_all
@@ -51,8 +51,8 @@ def reload_modules():
 
 def register():
     debug("Registering sverchok-gis")
-    register_all([settings, icons, sockets, nodes, menu, categories, examples])
+    register_all([settings, icons, sockets, nodes, menu, categories, examples, keymaps])
     show_welcome()
 
 def unregister():
-    unregister_all([categories, nodes, menu, icons, sockets, settings])
+    unregister_all([keymaps, categories, nodes, menu, icons, sockets, settings])
