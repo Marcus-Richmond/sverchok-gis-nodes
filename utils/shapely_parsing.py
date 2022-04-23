@@ -2,6 +2,10 @@
 
 from sverchok.data_structure import get_edge_loop
 
+def offset(inlist, n):
+    return [[a+n, b+n] for a, b in inlist]
+
+
 def get_edge_loops_from_multipoly(coords):
     """
     input:
@@ -22,7 +26,7 @@ def get_edge_loops_from_multipoly(coords):
             N = len(loop)
             temp_edge_list = get_edge_loop(N)
             if idx > 0:
-                temp_edge_list = offset(temp_edge_list, idx)
+                temp_edge_list = [[a+idx, b+idx] for a, b in temp_edge_list]
             idx += N
             edge_list.extend(temp_edge_list)
     return edge_list
