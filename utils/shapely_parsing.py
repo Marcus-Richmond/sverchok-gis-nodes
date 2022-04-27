@@ -1,5 +1,5 @@
 # shapely_parsing.py
-
+import mathutils
 from sverchok.data_structure import get_edge_loop
 
 def offset(inlist, n):
@@ -30,3 +30,21 @@ def get_edge_loops_from_multipoly(coords):
             idx += N
             edge_list.extend(temp_edge_list)
     return edge_list
+
+
+def get_face_indices_from_multipoly(coords):
+    """
+    this is similar to get_edge_loops_from_multipoly, except it tesselates complex ngons and 
+    returns their index lists.
+    """
+    idx = 0
+    face_list = []
+    for coordset in coords:
+        for loop in coordset:
+            N = len(loop)
+            temp_face_list = mathutils.geometry.tessellate_polygon([loop])
+            if idx > 0:
+                temp_face_list = [[i+idx for i in a] for a in temp_face_list]
+            idx += N
+            face_list.extend(temp_face_list)
+    return face_list 
