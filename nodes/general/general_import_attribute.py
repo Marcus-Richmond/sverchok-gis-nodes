@@ -13,11 +13,11 @@ import sverchok_gis
 # import fiona
 from sverchok_gis.dependencies import geopandas as gpd
 
-
 if gpd is None:
 
     from sverchok.utils.dummy_nodes import add_dummy
     add_dummy('SvSGNImportAttribute', 'Import Attribute', 'geopandas')
+    classes = []
 
 else:
 
@@ -89,5 +89,6 @@ else:
                 
             self.outputs["Attribute Values"].sv_set(listAttribute)
        
-classes = [SvSGNImportAttribute]
+    classes = [SvSGNImportAttribute]
+
 register, unregister = sverchok_gis.utils.register_class_factory_deps(classes, deps=[gpd])

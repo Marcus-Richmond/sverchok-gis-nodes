@@ -5,6 +5,7 @@ from sverchok.utils.dummy_nodes import add_dummy
 
 if gpd is None:
     add_dummy('SvSGNImportGeometryLine', 'Get Line Geometry', 'geopandas')
+    classes = []
 else:
     # from mathutils import Vector
     # from bpy.props import FloatProperty
@@ -105,5 +106,5 @@ else:
             self.outputs["Edges"].sv_set(Edges)      
 
 
-classes = [SvSGNImportGeometryLine]
+    classes = [SvSGNImportGeometryLine]
 register, unregister = sverchok_gis.utils.register_class_factory_deps(classes, deps=[gpd])
