@@ -6,7 +6,7 @@ import sverchok_gis
 if gpd is None:
 
     add_dummy('SvSGNImportGeometryPoint', 'Triangle Mesh Clean', 'geopandas')
-
+    classes = []
 else:
 
     # import pandas as pd
@@ -67,13 +67,7 @@ else:
                 
             self.outputs["Vertices"].sv_set(Vertices)
             
-classes = [SvSGNImportGeometryPoint]
+    classes = [SvSGNImportGeometryPoint]
+
 register, unregister = sverchok_gis.utils.register_class_factory_deps(classes, deps=[gpd])            
 
-# def register():
-#     if gpd is not None:
-#         bpy.utils.register_class(SvSGNImportGeometryPoint)
-
-# def unregister():
-#     if gpd is not None:    
-#         bpy.utils.unregister_class(SvSGNImportGeometryPoint)

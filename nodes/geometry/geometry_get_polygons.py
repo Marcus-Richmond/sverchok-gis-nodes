@@ -7,6 +7,7 @@ from sverchok_gis.dependencies import geopandas as gpd
 
 if gpd is None:
     add_dummy('SvSGNImportGeometryPolygon', 'load polygons', 'gpd')
+    classes = []
 else:
 
     from sverchok.node_tree import SverchCustomTreeNode
@@ -123,15 +124,6 @@ else:
             self.outputs["Edges"].sv_set(Edges)
             self.outputs["Polygons"].sv_set(Polygons)
             
-classes = [SvSGNImportGeometryPolygon]
+    classes = [SvSGNImportGeometryPolygon]
+
 register, unregister = sverchok_gis.utils.register_class_factory_deps(classes, deps=[gpd])            
-            
-
-# def register():
-#     if gpd is not None:
-#         bpy.utils.register_class(SvSGNImportGeometryPolygon)
-
-# def unregister():
-#     if gpd is not None:    
-#         bpy.utils.unregister_class(SvSGNImportGeometryPolygon)
-

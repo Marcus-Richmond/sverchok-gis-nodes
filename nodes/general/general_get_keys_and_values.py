@@ -20,7 +20,7 @@ if gpd is None:
 
     from sverchok.utils.dummy_nodes import add_dummy
     add_dummy('SvSGNGetKeysAndValues', 'Get Keys and Values', 'geopandas')
-
+    classes = []
 else:
 
     # import numpy as np
@@ -53,5 +53,6 @@ else:
             self.outputs["Keys"].sv_set(keys_output)
             self.outputs["Values"].sv_set(values_output)
        
-classes = [SvSGNGetKeysAndValues]
+    classes = [SvSGNGetKeysAndValues]
+
 register, unregister = sverchok_gis.utils.register_class_factory_deps(classes, deps=[gpd])
