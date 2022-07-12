@@ -1,13 +1,16 @@
 def nodes_index():
     return [
     ("General", [
-        ("general.general_import_attribute", "SvSGNImportAttribute"),
-        ("general.general_load_gis_data",    "SvSGNLoadGISData"),
-        ("general.general_get_keys_and_values", "SvSGNGetKeysAndValues"),]),
+        ("general.general_load_gis_data", "SvSGNLoadGISData")]),
     ("Geometry", [
         ("geometry.geometry_get_points",     "SvSGNImportGeometryPoint"),
         ("geometry.geometry_get_lines",      "SvSGNImportGeometryLine"),
-        ("geometry.geometry_get_polygons",   "SvSGNImportGeometryPolygon")])
+        ("geometry.geometry_get_polygons",   "SvSGNImportGeometryPolygon")]),
+    ("Attribute", [
+        ("general.general_import_attribute", "SvSGNImportAttribute"),
+        ("general.general_import_attribute_as_dictionary", "SvSGNImportAttributeDict"),
+        ("general.general_import_attribute_as_list", "SvSGNImportAttributeList"),
+        ("general.general_get_keys_and_values", "SvSGNGetKeysAndValues")])
     ]
 
 

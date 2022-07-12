@@ -20,6 +20,7 @@ class NODEVIEW_MT_GIS(bpy.types.Menu):
         else:
             layout.menu("NODEVIEW_MT_GISGeneralMenu")
             layout.menu("NODEVIEW_MT_GISGeometryMenu")
+            layout.menu("NODEVIEW_MT_GISAttributeMenu")
 
 
 # does not get registered
@@ -34,6 +35,7 @@ def make_class(name, bl_label):
 menu_classes = [
     make_class('General', 'General'),
     make_class('Geometry', 'Geometry'),
+    make_class('Attribute', 'Attribute'),
     NODEVIEW_MT_GIS
 ]
 
