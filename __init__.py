@@ -1,58 +1,154 @@
+
 bl_info = {
     "name": "Sverchok-GIS",
-    "author": "Various",
+    "author": "Marcus Richmond",
     "version": (0, 1, 0, 0),
-    "blender": (3, 1, 0),
+    "blender": (4, 2, 0),
     "location": "Node Editor",
     "category": "Node",
-    "description": "GIS nodes for Sverchok using geopandas",
-    "warning": "Under heavy development",
+    "description": "Sverchok GIS",
+    "warning": "",
     "wiki_url": "",
     "tracker_url": ""
 }
 
 import sys
 import importlib
-import sverchok
-from sverchok.utils.logging import info, debug
+import logging
 
+import nodeitems_utils
 
-DOCS_LINK = ''
-MODULE_NAME = "sverchok_gis"
+from sverchok.ui.nodeview_space_menu import add_node_menu
 
 # make sverchok the root module name, (if sverchok dir not named exactly "sverchok")
-if __name__ != MODULE_NAME:
-    sys.modules[MODULE_NAME] = sys.modules[__name__]
+if __name__ != "sverchok_gis":
+    sys.modules["sverchok_gis"] = sys.modules[__name__]
 
-import sverchok_gis
-from sverchok_gis import icons, settings, sockets, examples, menu, nodes, keymaps
-from sverchok_gis.utils import show_welcome, categories
-from sverchok_gis.utils._load_addon_architecture import make_node_list
-from sverchok_gis.utils._load_addon_architecture import register_all, unregister_all
+from sverchok_gis import icons
+from sverchok_gis import settings
+from sverchok_gis.nodes_index import nodes_index
+from sverchok_gis.utils import show_welcome
 
+logger = logging.getLogger('sverchok.gis')
+
+# Convert struct to menu.
+# In:
+#   - source struct
+#   - lambda to convert tuples (final items are tuples in format ("{path}utils.o3d_import", "{class_name}SvO3ImportNode"))
+def convert_config(obj, func=None):
+    if not func:
+        func = lambda elem: elem # call only on tuples
+    cls_names = []
+    if type(obj)==dict:
+        cls_names = dict()
+
+    for elem in obj:
+        if elem==None: # this is menu items break
+            cls_names.append( func(elem) )
+        elif type(elem)==tuple:
+            cls_names.append( func(elem) ) # this is menu item - tuple of two params
+        elif type(obj)==dict:
+            res = convert_config(obj[elem], func) # this is submenu
+            if res:
+                cls_names[elem]=res
+        elif type(obj)==list:
+            res = convert_config(elem, func)
+            if res:
+                cls_names.append(res)
+        else:
+            raise Exception("Menu struct error")
+    return cls_names
+
+# function as argument for convert_config. call only on tuples
+def collect_classes_names(elem):
+    if elem is None:
+        res = '---'  # menu splitter. Used by Sverchok.
+    elif isinstance(elem[0], dict): # property of menugroup, ex: ({'icon_name': 'MESH_BOX'}) for icon.
+        res = elem[0]
+    else:
+        res = elem[1]  # class name to bind to menu Shift-A
+    return res
+nodes_items = convert_config(nodes_index(), collect_classes_names)
+add_node_menu.append_from_config( nodes_items )
+
+def make_node_list():
+    modules = []
+    base_name = "sverchok_gis.nodes"
+    arr_items = []
+    def collect_module_names(elem):
+        if elem is not None:
+            if isinstance(elem[0], str):
+                arr_items.append(elem[0])
+        return elem
+    convert_config(nodes_index(), collect_module_names)
+    for module_name in arr_items:
+        module = importlib.import_module(f".{module_name}", base_name)
+        modules.append(module)
+    return modules
 
 imported_modules = [icons] + make_node_list()
 
 reload_event = False
+
 if "bpy" in locals():
     reload_event = True
-    info("Reloading sverchok-gis...")
-    reload_modules()
+    logger.info("Reloading sverchok-gis...")
 
 import bpy
 
+def register_nodes():
+    node_modules = make_node_list()
+    for module in node_modules:
+        module.register()
+    logger.info("Registered %s nodes", len(node_modules))
+
+def unregister_nodes():
+    global imported_modules
+    for module in reversed(imported_modules):
+        module.unregister()
+
+
+our_menu_classes = []
 
 def reload_modules():
     global imported_modules
     for im in imported_modules:
-        debug(f"Reloading: {im}")
+        logger.debug("Reloading: %s", im)
         importlib.reload(im)
+
+    util_modules = [m for p, m in sys.modules.items()
+                    if p.startswith('sverchok_gis.utils')]
+    for module in util_modules:
+        importlib.reload(module)
+
+
+if reload_event:
+    reload_modules()
 
 
 def register():
-    debug("Registering sverchok-gis")
-    register_all([settings, icons, sockets, nodes, menu, categories, examples, keymaps])
+    global our_menu_classes
+
+    logger.debug("Registering sverchok-gis")
+
+    add_node_menu.register()
+    settings.register()
+    icons.register()
+
+    register_nodes()
     show_welcome()
 
 def unregister():
-    unregister_all([keymaps, categories, nodes, menu, icons, sockets, settings])
+    global our_menu_classes
+    if 'SVERCHOK_GIS' in nodeitems_utils._node_categories:
+        nodeitems_utils.unregister_node_categories("SVERCHOK_GIS")
+    for clazz in our_menu_classes:
+        try:
+            bpy.utils.unregister_class(clazz)
+        except Exception as e:
+            print("Can't unregister menu class %s" % clazz)
+            print(e)
+    unregister_nodes()
+
+    icons.unregister()
+    settings.unregister()

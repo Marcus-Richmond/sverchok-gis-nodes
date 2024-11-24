@@ -1,12 +1,11 @@
 
-from os.path import basename, dirname, join
+from os.path import join
 from glob import glob
-import unittest
 
 from sverchok.utils.testing import SverchokTestCase, link_node_tree, get_node_tree, remove_node_tree
-from sverchok.utils.logging import info, debug, error, exception
+from sverchok_extra import logger
 
-from sverchok_open3d.testing import get_tests_path
+from sverchok_extra.testing import get_tests_path
 
 #@unittest.skip
 class ProcessRefsTestCase(SverchokTestCase):
@@ -14,8 +13,8 @@ class ProcessRefsTestCase(SverchokTestCase):
         refs_path = join(get_tests_path(), "references")
         TREE_NAME = "NodeTree"
         remove_node_tree(TREE_NAME)
-        for blend_path in glob(join(refs_path, "o3d_*.zip")):
-            info("Testing: %s", blend_path)
+        for blend_path in glob(join(refs_path, "extra_*.blend.gz")):
+            logger.info("Testing: %s", blend_path)
             with self.subTest(file = blend_path):
                 try:
                     with self.assert_logs_no_errors():
@@ -24,3 +23,4 @@ class ProcessRefsTestCase(SverchokTestCase):
                         tree.process()
                 finally:
                     remove_node_tree(TREE_NAME)
+

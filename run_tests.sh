@@ -10,5 +10,5 @@ set -e
 
 BLENDER=${BLENDER:-blender}
 
-$BLENDER -b --addons sverchok,sverchok_gis --python testing.py --python-exit-code 1
+$BLENDER -b --addons sverchok,sverchok_extra --python testing.py --python-exit-code 1
 
